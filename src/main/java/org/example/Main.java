@@ -1,20 +1,19 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonParser;
+import netscape.javascript.JSObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) {
-        Ingredient diamondPickaxe = new Ingredient("diamond_pickaxe");
-        Map<Integer, String> recipeMap = new HashMap<Integer, String>();
-        recipeMap.put(0, "diamond");
-        recipeMap.put(1, "diamond");
-        recipeMap.put(2, "diamond");
-        recipeMap.put(4, "stick");
-        recipeMap.put(7, "stick");
+    public static void main(String[] args) throws IOException {
+        File[] files = new File("src/main/resources/Minecraft-Recipes").listFiles();
 
-        Recipe diamondPickaxeRecipe = Recipe.build(diamondPickaxe, recipeMap);
-
-        System.out.println(diamondPickaxeRecipe);
+        List<Recipe> recipeList = Recipe.build(files);
+        System.out.println(recipeList);
     }
 }
