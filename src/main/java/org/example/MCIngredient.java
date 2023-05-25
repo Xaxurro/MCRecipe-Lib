@@ -6,10 +6,10 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class Ingredient {
+public class MCIngredient {
     String name;
 
-    public Ingredient(String name){
+    public MCIngredient(String name){
         this.name = "minecraft:" + name;
     }
 }
