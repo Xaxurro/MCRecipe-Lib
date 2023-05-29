@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -15,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter

@@ -2,16 +2,18 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+src/main/resources/Minecraft-Recipes/
+*.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/uiDesigner.xml
 *.iws
 *.iml
 *.ipr
-src/main/resources/Minecraft-Recipes/
 
 ### Eclipse ###
 .apt_generated

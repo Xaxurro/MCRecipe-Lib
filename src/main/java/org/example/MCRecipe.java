@@ -1,14 +1,18 @@
 package org.example;
 
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
@@ -52,6 +56,19 @@ public class MCRecipe {
             if (r != null) recipeList.add(r);
         }
         return recipeList;
+    }
+
+    public File createJSON(File outputFile) throws IOException {
+        ObjectMapper om = new ObjectMapper();
+
+        ObjectWriter w = om.writer(new DefaultPrettyPrinter());
+
+        w.writeValue(outputFile, this);
+        return outputFile;
+    }
+
+    public File createJSON(String outputFile) throws IOException {
+        return createJSON(new File(outputFile));
     }
 
 }
