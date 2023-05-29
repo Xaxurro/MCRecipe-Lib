@@ -1,15 +1,12 @@
-package org.example;
+package org.example.recipes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.*;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -18,6 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class MCRecipeShaped extends MCRecipe{
+    String type = "minecraft:crafting_shaped";
     Map<String, String> keys;
     String[] pattern;
 

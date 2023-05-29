@@ -1,4 +1,4 @@
-package org.example;
+package org.example.recipes;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,8 @@ import java.util.List;
 public class MCRecipe {
     String type;
     String item;
+    String category;
+    String group;
     int count = 1;
 //    Ingredients | Items
 
@@ -36,6 +37,7 @@ public class MCRecipe {
                 recipe = MCRecipeShaped.build(jsonNode, om);
                 break;
             case "minecraft:crafting_shapeless":
+                recipe = MCRecipeShapeless.build(json, om);
                 break;
         }
         recipe.setType(type);
