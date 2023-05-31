@@ -1,4 +1,4 @@
-package org.example.recipes;
+package org.example.classes.recipeTypes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
