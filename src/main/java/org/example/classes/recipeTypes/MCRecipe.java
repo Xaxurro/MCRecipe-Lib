@@ -1,9 +1,5 @@
-package org.example.recipes;
+package org.example.classes.recipeTypes;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.*;
 
 import java.io.File;
@@ -18,29 +14,37 @@ import java.util.List;
 @Setter
 public class MCRecipe {
     String type;
-    String item;
-    String category;
     String group;
-    int count = 1;
 //    Ingredients | Items
 
-    public static MCRecipe build (File json, ObjectMapper om) throws IOException {
+    public static MCRecipe build (JsonNode json, ObjectMapper om) throws JsonProcessingException {
         MCRecipe recipe = new MCRecipe();
+        String type = json.findValue("type").asText();
+        recipe.setType(type);
+
+        return recipe;
+    }
+
+    public static MCRecipe build (File json, ObjectMapper om) throws IOException {
         JsonNode jsonNode = om.readTree(json);
 
-        String type = jsonNode.findValue("type").asText();
-        if (type.startsWith("minecraft:crafting_special")) {
+        MCRecipe recipe = MCRecipe.build(jsonNode, om);
+
+        if (recipe.getType().startsWith("minecraft:crafting_special")) {
             return recipe;
         }
-        switch (type){
+
+        switch (recipe.getType()){
             case "minecraft:crafting_shaped":
                 recipe = MCRecipeShaped.build(jsonNode, om);
                 break;
             case "minecraft:crafting_shapeless":
-                recipe = MCRecipeShapeless.build(json, om);
+                recipe = MCRecipeShapeless.build(jsonNode, om);
                 break;
+            default:
+                recipe = MCRecipe.build(jsonNode, om);
         }
-        recipe.setType(type);
+
         return recipe;
     }
 
