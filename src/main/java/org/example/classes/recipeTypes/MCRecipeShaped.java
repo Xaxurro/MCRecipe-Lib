@@ -1,14 +1,11 @@
 package org.example.classes.recipeTypes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import org.example.classes.MCIngredient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,35 +14,57 @@ import java.util.Map;
 @Setter
 public class MCRecipeShaped extends MCRecipe{
     String type = "minecraft:crafting_shaped";
-    Map<String, MCIngredient[]> keys;
+    Map<String, MCIngredient> keys;
     String[] pattern;
     MCIngredient item;
-    int count;
+    int count = 1;
 
 //    Look at beacon.json for reference
-    public static MCRecipeShaped build(JsonNode json, ObjectMapper om) throws JsonProcessingException {
+    public static MCRecipeShaped build(JSONObject json){
         MCRecipeShaped recipe = new MCRecipeShaped();
 
-        String[] pattern = om.readValue(json.findValue("pattern").toString(), String[].class);
-        recipe.setPattern(pattern);
+        recipe.buildPattern(json);
 
-        Map<String, MCIngredient[]> keys = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> fields = json.findValue("key").fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> field = fields.next();
-            String K = field.getKey();
-            MCIngredient[] V = MCIngredient.build(field.getValue());
-            keys.put(K, V);
-        }
-        recipe.setKeys(keys);
+        recipe.buildKeys(json);
 
-        JsonNode result = json.findValue("result");
-        MCIngredient item = new MCIngredient(result.findValue("item").asText(), "item");
-        recipe.setItem(item);
-        if (result.has("count")){
-            recipe.setCount(result.findValue("count").asInt(1));
-        }
+        recipe.buildResult(json);
 
         return recipe;
+    }
+
+    private void buildPattern(JSONObject json) {
+        JSONArray jsonArray = json.getJSONArray("pattern");
+        List<String> patternList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            patternList.add(jsonArray.getString(i));
+        }
+
+        this.pattern = patternList.toArray(new String[patternList.size()]);
+    }
+
+    private void buildKeys(JSONObject json) {
+        Map<String, MCIngredient> keys = new HashMap<>();
+        JSONObject jsonKeys = json.getJSONObject("key");
+        for (String k : jsonKeys.keySet()) {
+            MCIngredient v = null;
+
+            Object jsonValue = jsonKeys.get(k);
+            if (jsonValue instanceof JSONObject) {
+                v = MCIngredient.build((JSONObject) jsonValue);
+            } else if (jsonValue instanceof JSONArray) {
+                v = MCIngredient.build((JSONArray) jsonValue);
+            }
+            keys.put(k, v);
+        }
+
+        this.keys = keys;
+    }
+
+    private void buildResult(JSONObject json) {
+        MCIngredient item = MCIngredient.build(json.getJSONObject("result"));
+        this.item = item;
+        if (json.has("count")){
+            this.count = json.optInt("count", 1);
+        }
     }
 }

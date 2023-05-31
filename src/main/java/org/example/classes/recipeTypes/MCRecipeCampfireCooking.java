@@ -1,6 +1,7 @@
 package org.example.classes.recipeTypes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.io.IOException;
 public class MCRecipeCampfireCooking extends MCRecipe{
     String type = "minecraft:campfire_cooking";
 
-    public static MCRecipeCampfireCooking build(File json, ObjectMapper om) throws IOException {
-        return (MCRecipeCampfireCooking) MCRecipe.build(json, om);
+    public static MCRecipeCampfireCooking build(JSONObject json){
+        return (MCRecipeCampfireCooking) MCRecipe.build(json);
     }
 }

@@ -1,6 +1,6 @@
 package org.example.classes.recipeTypes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.IOException;
 public class MCRecipeSmoking extends MCRecipe{
     String type = "minecraft:smoking";
 
-    public static MCRecipeSmoking build(File json, ObjectMapper om) throws IOException {
-        return (MCRecipeSmoking) MCRecipe.build(json, om);
+    public static MCRecipeSmoking build(JSONObject json) {
+        return (MCRecipeSmoking) MCRecipe.build(json);
     }
 }

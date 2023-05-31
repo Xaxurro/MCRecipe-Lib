@@ -1,10 +1,8 @@
 package org.example.classes.recipeTypes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import org.example.classes.MCIngredient;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,10 +18,10 @@ public class MCRecipeShapeless extends MCRecipe{
     MCIngredient item;
     int count;
 
-    public static MCRecipeShapeless build(JsonNode json, ObjectMapper om) throws JsonProcessingException {
+    public static MCRecipeShapeless build(JSONObject json){
         MCRecipeShapeless recipe = new MCRecipeShapeless();
 
-        JsonNode value = json.findValue("ingredients");
+//        TODO terminar lol
 
         return recipe;
     }

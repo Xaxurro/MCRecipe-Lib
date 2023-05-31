@@ -1,9 +1,15 @@
 package org.example.classes.recipeTypes;
 
 import lombok.*;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +23,19 @@ public class MCRecipe {
     String group;
 //    Ingredients | Items
 
-    public static MCRecipe build (JsonNode json, ObjectMapper om) throws JsonProcessingException {
+    public static MCRecipe build (JSONObject json){
         MCRecipe recipe = new MCRecipe();
-        String type = json.findValue("type").asText();
+        String type = json.getString("type");
         recipe.setType(type);
 
+//        String group = json.getString("group");
+//        recipe.setGroup(group);
         return recipe;
     }
 
-    public static MCRecipe build (File json, ObjectMapper om) throws IOException {
-        JsonNode jsonNode = om.readTree(json);
-
-        MCRecipe recipe = MCRecipe.build(jsonNode, om);
+    public static MCRecipe build (String jsonString){
+        JSONObject json = new JSONObject(jsonString);
+        MCRecipe recipe = MCRecipe.build(json);
 
         if (recipe.getType().startsWith("minecraft:crafting_special")) {
             return recipe;
@@ -36,40 +43,40 @@ public class MCRecipe {
 
         switch (recipe.getType()){
             case "minecraft:crafting_shaped":
-                recipe = MCRecipeShaped.build(jsonNode, om);
+                recipe = MCRecipeShaped.build(json);
                 break;
             case "minecraft:crafting_shapeless":
-                recipe = MCRecipeShapeless.build(jsonNode, om);
+                recipe = MCRecipeShapeless.build(json);
                 break;
-            default:
-                recipe = MCRecipe.build(jsonNode, om);
         }
 
         return recipe;
     }
 
-    public static MCRecipe build (File json) throws IOException {
-        ObjectMapper om = new ObjectMapper();
-        return MCRecipe.build(json, om);
+    public static MCRecipe build (File file) throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get(file.getPath())));
+        return MCRecipe.build(json);
     }
 
     public static List<MCRecipe> build (File[] jsons) throws IOException {
         List<MCRecipe> recipeList = new ArrayList<>();
-        ObjectMapper om = new ObjectMapper();
 
         for (File json : jsons) {
-            MCRecipe r = MCRecipe.build(json, om);
+            MCRecipe r = MCRecipe.build(json);
+
             if (r != null) recipeList.add(r);
         }
         return recipeList;
     }
 
-    public File createJSON(File outputFile) throws IOException {
-        ObjectMapper om = new ObjectMapper();
+//    TODO hacer que cuando se quiera escribir el archivo que verifique si la longitud del array es 1
+//    TODO hacer que cada subclase tengo su propio metodo createJsonFile, considerar usar interfaz
 
-        ObjectWriter w = om.writer(new DefaultPrettyPrinter());
-
-        w.writeValue(outputFile, this);
+    public File createJSON(File outputFile) throws IOException{
+        FileWriter fw = new FileWriter(outputFile);
+        String json = new JSONObject(this).toString(2);
+        fw.write(json);
+        fw.close();
         return outputFile;
     }
 
