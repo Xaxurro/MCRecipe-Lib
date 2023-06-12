@@ -1,6 +1,7 @@
 package org.example.classes.recipeTypes;
 
 import lombok.*;
+import org.example.Interfaces.Ingredients;
 import org.example.classes.MCIngredient;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +13,7 @@ import java.util.*;
 @ToString
 @Getter
 @Setter
-public class MCRecipeShaped extends MCRecipe{
+public class MCRecipeShaped extends MCRecipe implements Ingredients {
     String type = "minecraft:crafting_shaped";
     Map<String, MCIngredient> keys;
     String[] pattern;
@@ -39,7 +40,7 @@ public class MCRecipeShaped extends MCRecipe{
             patternList.add(jsonArray.getString(i));
         }
 
-        this.pattern = patternList.toArray(new String[patternList.size()]);
+        this.pattern = patternList.toArray(new String[0]);
     }
 
     private void buildKeys(JSONObject json) {
@@ -61,10 +62,13 @@ public class MCRecipeShaped extends MCRecipe{
     }
 
     private void buildResult(JSONObject json) {
-        MCIngredient item = MCIngredient.build(json.getJSONObject("result"));
-        this.item = item;
+        this.item = MCIngredient.build(json.getJSONObject("result"));
         if (json.has("count")){
             this.count = json.optInt("count", 1);
         }
+    }
+
+    public MCIngredient[] getIngredients() {
+        return getIngredients(keys);
     }
 }

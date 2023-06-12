@@ -4,11 +4,9 @@ import lombok.*;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +17,14 @@ import java.util.List;
 @Getter
 @Setter
 public class MCRecipe {
+    String name;
     String type;
     String group;
 //    Ingredients | Items
 
+//
+//    Build Methods
+//
     public static MCRecipe build (JSONObject json){
         MCRecipe recipe = new MCRecipe();
         String type = json.getString("type");
@@ -55,7 +57,9 @@ public class MCRecipe {
 
     public static MCRecipe build (File file) throws IOException {
         String json = new String(Files.readAllBytes(Paths.get(file.getPath())));
-        return MCRecipe.build(json);
+        MCRecipe recipe = MCRecipe.build(json);
+        recipe.setName(file.getName());
+        return recipe;
     }
 
     public static List<MCRecipe> build (File[] jsons) throws IOException {
@@ -72,6 +76,9 @@ public class MCRecipe {
 //    TODO hacer que cuando se quiera escribir el archivo que verifique si la longitud del array es 1
 //    TODO hacer que cada subclase tengo su propio metodo createJsonFile, considerar usar interfaz
 
+//
+//    CreateJSON Methods
+//
     public File createJSON(File outputFile) throws IOException{
         FileWriter fw = new FileWriter(outputFile);
         String json = new JSONObject(this).toString(2);

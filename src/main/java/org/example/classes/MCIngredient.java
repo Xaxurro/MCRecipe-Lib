@@ -45,7 +45,7 @@ public class MCIngredient {
             JSONObject json = jsonArray.getJSONObject(i);
             idList.add(json.getString("item"));
         }
-        ingredient.setIds(idList.toArray(new String[idList.size()]));
+        ingredient.setIds(idList.toArray(new String[0]));
 
         return ingredient;
     }
