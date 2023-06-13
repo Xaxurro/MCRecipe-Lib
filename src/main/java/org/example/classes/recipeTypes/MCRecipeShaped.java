@@ -17,7 +17,7 @@ public class MCRecipeShaped extends MCRecipe implements Ingredients {
     String type = "minecraft:crafting_shaped";
     Map<String, MCIngredient> keys;
     String[] pattern;
-    MCIngredient item;
+    MCIngredient result;
     int count = 1;
 
 //    Look at beacon.json for reference
@@ -62,7 +62,7 @@ public class MCRecipeShaped extends MCRecipe implements Ingredients {
     }
 
     private void buildResult(JSONObject json) {
-        this.item = MCIngredient.build(json.getJSONObject("result"));
+        this.result = MCIngredient.build(json.getJSONObject("result"));
         if (json.has("count")){
             this.count = json.optInt("count", 1);
         }

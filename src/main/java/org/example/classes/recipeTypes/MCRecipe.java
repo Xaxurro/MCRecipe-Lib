@@ -30,8 +30,6 @@ public class MCRecipe {
         String type = json.getString("type");
         recipe.setType(type);
 
-//        String group = json.getString("group");
-//        recipe.setGroup(group);
         return recipe;
     }
 
@@ -51,6 +49,8 @@ public class MCRecipe {
                 recipe = MCRecipeShapeless.build(json);
                 break;
         }
+
+        if (json.has("group")) recipe.setGroup(json.getString("group"));
 
         return recipe;
     }
