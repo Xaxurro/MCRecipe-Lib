@@ -25,12 +25,19 @@ public class MCIngredient {
         this.type = "item";
     }
 
-    public static MCIngredient build(JSONObject json) {
+    public static MCIngredient build(Object object) {
+//        TODO evitar usar Object
+        if (object instanceof JSONObject) return build((JSONObject) object);
+        if (object instanceof JSONArray) return build((JSONArray) object);
+        return null;
+    }
+
+    public static MCIngredient build(JSONObject jsonObject) {
 //        TODO: purpur_slab.json tiene 2 posibles items en vez de un tag
         MCIngredient ingredient = new MCIngredient();
-        String type = (json.has("item") ? "item" : "tag");
+        String type = (jsonObject.has("item") ? "item" : "tag");
         ingredient.setType(type);
-        ingredient.setIds(new String[] {json.getString(type)});
+        ingredient.setIds(new String[] {jsonObject.getString(type)});
 
         return ingredient;
     }

@@ -6,6 +6,8 @@ import org.example.classes.MCIngredient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @AllArgsConstructor
@@ -21,6 +23,26 @@ public class MCRecipeShaped extends MCRecipe implements Ingredients {
     int count = 1;
 
 //    Look at beacon.json for reference
+//    
+//    .BUILD METHODS
+//    
+
+    public static MCRecipeShaped build (String jsonString) {
+        return (MCRecipeShaped) MCRecipe.build(jsonString);
+    }
+
+    public static MCRecipeShaped build (File file) throws IOException {
+        return (MCRecipeShaped) MCRecipe.build(file);
+    }
+
+    public static List<MCRecipeShaped> build (File[] files) throws IOException {
+        List<MCRecipeShaped> recipeList = new ArrayList<>();
+        for (MCRecipe r :  MCRecipe.build(files)) {
+            if (r instanceof MCRecipeShaped) recipeList.add((MCRecipeShaped) r);
+        }
+        return recipeList;
+    }
+    
     public static MCRecipeShaped build(JSONObject json){
         MCRecipeShaped recipe = new MCRecipeShaped();
 

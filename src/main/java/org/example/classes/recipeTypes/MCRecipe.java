@@ -62,11 +62,11 @@ public class MCRecipe {
         return recipe;
     }
 
-    public static List<MCRecipe> build (File[] jsons) throws IOException {
+    public static List<? extends MCRecipe> build (File[] files) throws IOException {
         List<MCRecipe> recipeList = new ArrayList<>();
 
-        for (File json : jsons) {
-            MCRecipe r = MCRecipe.build(json);
+        for (File file : files) {
+            MCRecipe r = MCRecipe.build(file);
 
             if (r != null) recipeList.add(r);
         }
@@ -90,5 +90,4 @@ public class MCRecipe {
     public File createJSON(String outputFile) throws IOException {
         return createJSON(new File(outputFile));
     }
-
 }
