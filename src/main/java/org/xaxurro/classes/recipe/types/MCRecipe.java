@@ -1,7 +1,8 @@
-package org.example.classes.recipeTypes;
+package org.xaxurro.classes.recipe.types;
 
 import lombok.*;
 import org.json.JSONObject;
+import org.xaxurro.enums.RecipeType;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,8 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 public class MCRecipe {
+
     String name;
-    String type;
+    RecipeType type;
     String group;
 //    Ingredients | Items
 
@@ -28,8 +30,8 @@ public class MCRecipe {
     public static MCRecipe build (JSONObject json){
         MCRecipe recipe = new MCRecipe();
         String type = json.getString("type");
-        recipe.setType(type);
-
+        type = type.substring(type.indexOf(":") + 1);
+        recipe.setType(type.startsWith("minecraft:crafting_special") ? RecipeType.special: RecipeType.valueOf(type));
         return recipe;
     }
 
@@ -37,15 +39,11 @@ public class MCRecipe {
         JSONObject json = new JSONObject(jsonString);
         MCRecipe recipe = MCRecipe.build(json);
 
-        if (recipe.getType().startsWith("minecraft:crafting_special")) {
-            return recipe;
-        }
-
         switch (recipe.getType()){
-            case "minecraft:crafting_shaped":
-                recipe = MCRecipeShaped.build(json);
+            case crafting_shaped:
+                recipe = MCRecipeShaped.buildFromJSON(json);
                 break;
-            case "minecraft:crafting_shapeless":
+            case crafting_shapeless:
                 recipe = MCRecipeShapeless.build(json);
                 break;
         }
@@ -74,12 +72,12 @@ public class MCRecipe {
     }
 
 //    TODO hacer que cuando se quiera escribir el archivo que verifique si la longitud del array es 1
-//    TODO hacer que cada subclase tengo su propio metodo createJsonFile, considerar usar interfaz
+//    TODO hacer que cada subclase tengo su propio metodo generateJsonFile, considerar usar interfaz
 
 //
-//    CreateJSON Methods
+//    generateJSON Methods
 //
-    public File createJSON(File outputFile) throws IOException{
+    public File generateJSON(File outputFile) throws IOException{
         FileWriter fw = new FileWriter(outputFile);
         String json = new JSONObject(this).toString(2);
         fw.write(json);
@@ -87,7 +85,7 @@ public class MCRecipe {
         return outputFile;
     }
 
-    public File createJSON(String outputFile) throws IOException {
-        return createJSON(new File(outputFile));
+    public File generateJSON(String outputFileName) throws IOException {
+        return generateJSON(new File(outputFileName));
     }
 }

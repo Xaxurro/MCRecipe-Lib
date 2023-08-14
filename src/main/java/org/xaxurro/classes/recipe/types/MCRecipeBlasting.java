@@ -1,4 +1,4 @@
-package org.example.classes.recipeTypes;
+package org.xaxurro.classes.recipe.types;
 
 import org.json.JSONObject;
 
