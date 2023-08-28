@@ -1,6 +1,8 @@
 package recipes;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
+import org.xaxurro.classes.MCRecipeException;
 import org.xaxurro.classes.recipe.properties.MCIngredient;
 import org.xaxurro.classes.recipe.properties.MCShape;
 import org.xaxurro.classes.recipe.properties.MCResult;
@@ -34,7 +36,7 @@ public class ShapedTests {
     }
 
     @Test
-    public void succesfullRecipeCreation() {
+    public void succesfullRecipeCreation() throws MCRecipeException {
         MCRecipeShaped recipe = new MCRecipeShaped();
 
         MCShape shape = new MCShape();
@@ -53,6 +55,45 @@ public class ShapedTests {
         recipe.setShape(shape);
 
         recipe.setResult(new MCResult("diamond_pickaxe"));
+    }
+
+    @Test
+    public void shapeExceptions() {
+        MCRecipeShaped recipe = new MCRecipeShaped();
+        MCShape shape = new MCShape();
+
+        Assert.assertThrows(MCRecipeException.class, () -> {
+            recipe.setShape(shape);
+        });
+
+        String[] pattern = new String[]{
+                "XSX",
+                " # ",
+                " # "
+        };
+        shape.setPattern(pattern);
+
+        Assert.assertThrows(MCRecipeException.class, () -> {
+            recipe.setShape(shape);
+        });
+
+        shape.setPattern(null);
+        shape.addItem("X", "diamond");
+        shape.addItem("S", "string");
+        shape.addItem("#", "stick");
+
+        Assert.assertThrows(MCRecipeException.class, () -> {
+            recipe.setShape(shape);
+        });
+
+        shape.setPattern(pattern);
+        shape.setKeys(null);
+        shape.addItem("X", "diamond");
+        shape.addItem("S", "string");
+
+        Assert.assertThrows(MCRecipeException.class, () -> {
+            recipe.setShape(shape);
+        });
     }
 
     @Test
