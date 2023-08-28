@@ -47,17 +47,17 @@ public class MCShape {
         return pattern;
     }
 
-    public void setPattern(String[] pattern, Map<String, List<MCIngredient>> keys) {
-        if (!isPatternValid(pattern, keys.keySet())) {
-            throw new RuntimeException("Pattern does not match Key Set");
-        }
-    }
-
-    public void setPattern(String[] pattern) {
-        if (!isPatternValid(pattern, keys.keySet())) {
-            throw new RuntimeException("Pattern does not match Key Set");
-        }
-    }
+//    public void setPattern(String[] pattern, Map<String, List<MCIngredient>> keys) {
+//        if (!isPatternValid(pattern, keys.keySet())) {
+//            throw new RuntimeException("Pattern does not match Key Set");
+//        }
+//    }
+//
+//    public void setPattern(String[] pattern) {
+//        if (!isPatternValid(pattern, keys.keySet())) {
+//            throw new RuntimeException("Pattern does not match Key Set");
+//        }
+//    }
 
     public void addKey(String key, List<MCIngredient> ingredients) {
         if (keys.containsKey(key)) {
@@ -93,6 +93,9 @@ public class MCShape {
     }
 
     private boolean isPatternValid(String[] pattern, Set<String> keySet) {
+        if (pattern == null) return false;
+        if (keySet.size() == 0) return false;
+
         Set<String> charSet = new HashSet<>();
         for (String line : pattern) {
             for (int i = 0; i < line.length(); i++) {
@@ -102,10 +105,18 @@ public class MCShape {
 
         for (String key : keySet) {
             if (!charSet.contains(key)) {
-//                throw new RuntimeException("key \"" + key + "\" is not present in pattern.");
                 return false;
             }
         }
         return true;
+    }
+
+    public boolean isPatternValid() {
+        return isPatternValid(pattern, keys.keySet());
+    }
+
+    public void setKeys(Map<String, List<MCIngredient>> keys) {
+        if (keys != null) this.keys = keys;
+        else this.keys = new HashMap<>();
     }
 }

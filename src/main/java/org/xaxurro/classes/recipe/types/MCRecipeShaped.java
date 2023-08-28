@@ -1,6 +1,7 @@
 package org.xaxurro.classes.recipe.types;
 
 import lombok.*;
+import org.xaxurro.classes.MCRecipeException;
 import org.xaxurro.classes.recipe.properties.MCIngredient;
 import org.xaxurro.classes.recipe.properties.MCShape;
 import org.xaxurro.classes.recipe.properties.MCResult;
@@ -22,13 +23,13 @@ public class MCRecipeShaped extends MCRecipe {
     MCResult result;
 
 //    Look at these files for a MCRecipeShaped reference:
-//    -beacon.json (Simple Shape)
+//    -beacon (Simple Shape)
 //    -purpur_slab (2 Valid Blocks)
-//    -wooden_pickaxe (Tag use)
-//    
-//    .BUILD METHODS
-//    
+//    -wooden_pickaxe / stone_pickaxe (Tag use)
 
+//    ---------------
+//         BUILD
+//    ---------------
     public static MCRecipeShaped buildFromJSON(String jsonString) {
         return (MCRecipeShaped) MCRecipe.build(jsonString);
     }
@@ -44,7 +45,8 @@ public class MCRecipeShaped extends MCRecipe {
         }
         return recipeList;
     }
-    
+
+
     public static MCRecipeShaped buildFromJSON(JSONObject json){
         MCRecipeShaped recipe = new MCRecipeShaped();
 
@@ -61,11 +63,19 @@ public class MCRecipeShaped extends MCRecipe {
         this.shape = shape;
     }
 
-
     private void buildResult(JSONObject json) {
         MCResult result = MCResult.buildFromJSON(json.getJSONObject("result"));
 
         this.result = result;
+    }
+
+//    ---------------
+//         BUILD
+//    ---------------
+
+    public void setShape(MCShape shape) throws MCRecipeException {
+        if (!shape.isPatternValid()) throw new MCRecipeException("Pattern is invalid");
+        this.shape = shape;
     }
 
     public List<MCIngredient> getIngredients() {

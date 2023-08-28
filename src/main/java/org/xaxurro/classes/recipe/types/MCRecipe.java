@@ -21,7 +21,7 @@ public class MCRecipe {
 
     String name;
     RecipeType type;
-    String group;
+    String category;
 //    Ingredients | Items
 
 //
@@ -31,7 +31,7 @@ public class MCRecipe {
         MCRecipe recipe = new MCRecipe();
         String type = json.getString("type");
         type = type.substring(type.indexOf(":") + 1);
-        recipe.setType(type.startsWith("minecraft:crafting_special") ? RecipeType.special: RecipeType.valueOf(type));
+        recipe.setType(type.startsWith("crafting_special") || type.equals("crafting_decorated_pot") ? RecipeType.special: RecipeType.valueOf(type));
         return recipe;
     }
 
@@ -48,7 +48,7 @@ public class MCRecipe {
                 break;
         }
 
-        if (json.has("group")) recipe.setGroup(json.getString("group"));
+        if (json.has("category")) recipe.setCategory(json.getString("category"));
 
         return recipe;
     }
