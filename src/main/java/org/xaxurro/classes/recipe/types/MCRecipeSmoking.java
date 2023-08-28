@@ -1,11 +1,20 @@
 package org.xaxurro.classes.recipe.types;
 
+import lombok.*;
 import org.json.JSONObject;
+import org.xaxurro.enums.RecipeType;
 
-public class MCRecipeSmoking extends MCRecipe{
-    String type = "minecraft:smoking";
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+public class MCRecipeSmoking implements MCRecipe{
+    String name;
+    String category;
+    RecipeType type = RecipeType.smoking;
 
-    public static MCRecipeSmoking build(JSONObject json) {
-        return (MCRecipeSmoking) MCRecipe.build(json);
+    public MCRecipeSmoking (JSONObject json){
+
     }
 }

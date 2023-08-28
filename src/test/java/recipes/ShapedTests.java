@@ -3,6 +3,7 @@ package recipes;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.xaxurro.classes.MCRecipeException;
+import org.xaxurro.classes.recipe.MCRecipeFactory;
 import org.xaxurro.classes.recipe.properties.MCIngredient;
 import org.xaxurro.classes.recipe.properties.MCShape;
 import org.xaxurro.classes.recipe.properties.MCResult;
@@ -18,8 +19,8 @@ import java.util.Map;
 
 public class ShapedTests {
     @Test
-    public void loadRecipe() throws IOException {
-        MCRecipeShaped recipe = MCRecipeShaped.buildFromFile(RecipeTestUtils.SHAPED_RECIPE_FILE);
+    public void loadRecipe() throws IOException, MCRecipeException {
+        MCRecipeShaped recipe = (MCRecipeShaped) MCRecipeFactory.buildFromFile(RecipeTestUtils.SHAPED_RECIPE_FILE);
 
         String[] pattern = recipe.getShape().getPattern();
         Assertions.assertEquals("XXX", pattern[0]);
@@ -97,9 +98,9 @@ public class ShapedTests {
     }
 
     @Test
-    public void purpurSlabParse() throws IOException {
+    public void purpurSlabParse() throws IOException, MCRecipeException {
         File purpurSlabFile = RecipeTestUtils.getRecipeFile("purpur_slab");
-        MCRecipeShaped purpurSlab = MCRecipeShaped.buildFromFile(purpurSlabFile);
+        MCRecipeShaped purpurSlab = (MCRecipeShaped) MCRecipeFactory.buildFromFile(purpurSlabFile);
         Assertions.assertEquals(new MCIngredient("purpur_block"), purpurSlab.getIngredients().get(0));
         Assertions.assertEquals(new MCIngredient("purpur_pillar"), purpurSlab.getIngredients().get(1));
     }

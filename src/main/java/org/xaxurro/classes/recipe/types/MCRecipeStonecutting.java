@@ -1,11 +1,20 @@
 package org.xaxurro.classes.recipe.types;
 
+import lombok.*;
 import org.json.JSONObject;
+import org.xaxurro.enums.RecipeType;
 
-public class MCRecipeStonecutting extends MCRecipe{
-    String type = "minecraft:stonecutting";
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+public class MCRecipeStonecutting implements MCRecipe{
+    String name;
+    String category;
+    RecipeType type = RecipeType.stonecutting;
 
-    public static MCRecipeStonecutting build(JSONObject json) {
-        return (MCRecipeStonecutting) MCRecipe.build(json);
+    public MCRecipeStonecutting (JSONObject json){
+
     }
 }

@@ -1,3 +1,5 @@
+import org.xaxurro.classes.MCRecipeException;
+import org.xaxurro.classes.recipe.MCRecipeFactory;
 import org.xaxurro.classes.recipe.types.MCRecipe;
 import org.xaxurro.enums.RecipeType;
 
@@ -7,7 +9,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class GetTypesSamples {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MCRecipeException {
         final String path = "src/main/resources/Minecraft-Recipes";
         File[] files = new File(path).listFiles();
 
@@ -22,11 +24,11 @@ public class GetTypesSamples {
 //        System.out.println(file.getAbsolutePath() + "\n");
     }
 
-    private static Map<RecipeType, List<String>> getSamples(int maxSamples, File[] files) throws IOException {
+    private static Map<RecipeType, List<String>> getSamples(int maxSamples, File[] files) throws IOException, MCRecipeException {
         Map<RecipeType, List<String>> typeMap = new HashMap();
 
         for (File file : files) {
-            MCRecipe recipe = MCRecipe.build(file);
+            MCRecipe recipe = MCRecipeFactory.buildFromFile(file);
 
             RecipeType type = recipe.getType();
             String example = file.getPath();

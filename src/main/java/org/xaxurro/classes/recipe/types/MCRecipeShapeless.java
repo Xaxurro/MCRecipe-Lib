@@ -17,29 +17,15 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
-public class MCRecipeShapeless extends MCRecipe {
+public class MCRecipeShapeless implements MCRecipe {
+    String name;
+    String category;
     RecipeType type = RecipeType.crafting_shapeless;
     MCIngredient ingredients;
     MCResult result;
 
-    public static MCRecipeShapeless build (String jsonString) {
-        return (MCRecipeShapeless) MCRecipe.build(jsonString);
-    }
-
-    public static MCRecipeShapeless build (File file) throws IOException {
-        return (MCRecipeShapeless) MCRecipe.build(file);
-    }
-
-    public static List<MCRecipeShapeless> build (File[] files) throws IOException {
-        List<MCRecipeShapeless> recipeList = new ArrayList<>();
-        for (MCRecipe r :  MCRecipe.build(files)) {
-            if (r instanceof MCRecipeShapeless) recipeList.add((MCRecipeShapeless) r);
-        }
-        return recipeList;
-    }
-
-    public static MCRecipeShapeless build(JSONObject json){
-        MCRecipeShapeless recipe = new MCRecipeShapeless();
+    public MCRecipeShapeless(JSONObject json){
+//        MCRecipeShapeless recipe = new MCRecipeShapeless();
 
 //        recipe.buildIngredients(json);
 //
@@ -47,7 +33,7 @@ public class MCRecipeShapeless extends MCRecipe {
 
 //        TODO terminar lol
 
-        return recipe;
+//        return recipe;
     }
 
 //    private void buildIngredients(JSONObject json) {
@@ -66,6 +52,4 @@ public class MCRecipeShapeless extends MCRecipe {
 //        this.result = MCIngredient.buildFromJSON(result);
 //        if (result.has("count")) this.count = result.getInt("count");
 //    }
-
-//    private void buildFromJSON
 }

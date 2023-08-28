@@ -1,11 +1,20 @@
 package org.xaxurro.classes.recipe.types;
 
+import lombok.*;
 import org.json.JSONObject;
+import org.xaxurro.enums.RecipeType;
 
-public class MCRecipeBlasting extends MCRecipe{
-    String type = "minecraft:blasting";
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+public class MCRecipeBlasting implements MCRecipe{
+    String name;
+    String category;
+    RecipeType type = RecipeType.blasting;
 
-    public static MCRecipeBlasting build(JSONObject json){
-        return (MCRecipeBlasting) MCRecipe.build(json);
+    public MCRecipeBlasting(JSONObject json){
+
     }
 }

@@ -99,12 +99,13 @@ public class MCShape {
         Set<String> charSet = new HashSet<>();
         for (String line : pattern) {
             for (int i = 0; i < line.length(); i++) {
-                charSet.add(String.valueOf(line.charAt(i)));
+                String c = String.valueOf(line.charAt(i));
+                if (!c.equals(" ")) charSet.add(c);
             }
         }
 
-        for (String key : keySet) {
-            if (!charSet.contains(key)) {
+        for (String c : charSet) {
+            if (!keySet.contains(c)) {
                 return false;
             }
         }

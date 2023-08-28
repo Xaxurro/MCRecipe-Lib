@@ -1,12 +1,21 @@
 package org.xaxurro.classes.recipe.types;
 
 
+import lombok.*;
 import org.json.JSONObject;
+import org.xaxurro.enums.RecipeType;
 
-public class MCRecipeCampfireCooking extends MCRecipe{
-    String type = "minecraft:campfire_cooking";
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+public class MCRecipeCampfireCooking implements MCRecipe{
+    String name;
+    String category;
+    RecipeType type = RecipeType.campfire_cooking;
 
-    public static MCRecipeCampfireCooking build(JSONObject json){
-        return (MCRecipeCampfireCooking) MCRecipe.build(json);
+    public MCRecipeCampfireCooking(JSONObject json){
+
     }
 }
