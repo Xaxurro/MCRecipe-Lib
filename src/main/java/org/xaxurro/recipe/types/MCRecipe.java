@@ -1,4 +1,4 @@
-package org.xaxurro.classes.recipe.types;
+package org.xaxurro.recipe.types;
 
 import lombok.*;
 import org.json.JSONObject;
@@ -13,12 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface MCRecipe {
-
-//    String name;
-//    RecipeType type;
-//    String category;
-//    Ingredients | Items
-
 //
 //    Build Methods
 //
@@ -35,15 +29,9 @@ public interface MCRecipe {
 //
 //    generateJSON Methods
 //
-    default public File generateJSON(File outputFile) throws IOException{
-        FileWriter fw = new FileWriter(outputFile);
-        String json = new JSONObject(this).toString(2);
-        fw.write(json);
-        fw.close();
-        return outputFile;
-    }
+    File generateJSON(File outputFile) throws IOException;
 
-    default public File generateJSON(String outputFileName) throws IOException {
+    default File generateJSON(String outputFileName) throws IOException {
         return generateJSON(new File(outputFileName));
     }
 }

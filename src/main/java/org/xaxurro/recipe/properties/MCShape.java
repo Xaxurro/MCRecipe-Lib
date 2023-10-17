@@ -1,8 +1,9 @@
-package org.xaxurro.classes.recipe.properties;
+package org.xaxurro.recipe.properties;
 
 import lombok.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xaxurro.recipe.JSONAble;
 import org.xaxurro.enums.IngredientType;
 
 import java.util.*;
@@ -12,7 +13,7 @@ import java.util.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class MCShape {
+public class MCShape implements JSONAble {
     String[] pattern;
     Map<String, List<MCIngredient>> keys = new HashMap<>();
 
@@ -38,7 +39,7 @@ public class MCShape {
             }
             if (jsonValue instanceof JSONObject) {
                 MCIngredient v = MCIngredient.buildFromJSON((JSONObject) jsonValue);
-                keys.put(k, Collections.singletonList(v));
+                keys.put(k, Arrays.asList(v));
             }
         }
 
@@ -71,7 +72,7 @@ public class MCShape {
         if (keys.containsKey(key)) {
             keys.get(key).add(ingredient);
         } else {
-            keys.put(key, Collections.singletonList(ingredient));
+            keys.put(key, Arrays.asList(ingredient));
         }
     }
 
@@ -119,5 +120,23 @@ public class MCShape {
     public void setKeys(Map<String, List<MCIngredient>> keys) {
         if (keys != null) this.keys = keys;
         else this.keys = new HashMap<>();
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        JSONObject keyJSON = new JSONObject();
+        for (Map.Entry<String, List<MCIngredient>> entry : keys.entrySet()) {
+            List<MCIngredient> entryValue = entry.getValue();
+            if (entryValue.size() == 1) {
+                keyJSON.put(entry.getKey(), entryValue.get(0).toJSONObject());
+            } else  {
+                JSONArray array = new JSONArray();
+                for (MCIngredient ingredient : entryValue) {
+                    array.put(ingredient.toJSONObject());
+                }
+                keyJSON.put(entry.getKey(), array);
+            }
+        }
+        return keyJSON;
     }
 }

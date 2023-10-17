@@ -2,20 +2,18 @@ package recipes;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-import org.xaxurro.classes.MCRecipeException;
-import org.xaxurro.classes.recipe.MCRecipeFactory;
-import org.xaxurro.classes.recipe.properties.MCIngredient;
-import org.xaxurro.classes.recipe.properties.MCShape;
-import org.xaxurro.classes.recipe.properties.MCResult;
-import org.xaxurro.classes.recipe.types.MCRecipeShaped;
+import org.xaxurro.recipe.MCRecipeException;
+import org.xaxurro.recipe.MCRecipeFactory;
+import org.xaxurro.recipe.properties.MCIngredient;
+import org.xaxurro.recipe.properties.MCShape;
+import org.xaxurro.recipe.properties.MCResult;
+import org.xaxurro.recipe.types.MCRecipeShaped;
 import org.xaxurro.enums.IngredientType;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShapedTests {
     @Test
@@ -29,7 +27,7 @@ public class ShapedTests {
 
         List<MCIngredient> ingredients = recipe.getIngredients();
         Assertions.assertEquals("minecraft:diamond", ingredients.get(1).getId());
-        Assertions.assertEquals(IngredientType.Item, ingredients.get(1).getIngredientType());
+        Assertions.assertEquals(IngredientType.Item, ingredients.get(1).getType());
 
         MCResult result = recipe.getResult();
         Assertions.assertEquals("minecraft:diamond_pickaxe", result.getId());

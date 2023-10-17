@@ -1,8 +1,9 @@
-package org.xaxurro.classes.recipe.properties;
+package org.xaxurro.recipe.properties;
 
 import lombok.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xaxurro.recipe.JSONAble;
 import org.xaxurro.classes.utils.IdUtils;
 import org.xaxurro.enums.IngredientType;
 
@@ -10,24 +11,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Setter
-@Getter
 @ToString
 @EqualsAndHashCode
-public class MCIngredient {
+public class MCIngredient implements JSONAble {
     String id;
-    IngredientType ingredientType;
+    IngredientType type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public IngredientType getType() {
+        return type;
+    }
+
+    public void setType(IngredientType ingredientType) {
+        this.type = ingredientType;
+    }
 
     public MCIngredient(String id) {
         IdUtils.isValidThrow(id);
         this.id = IdUtils.parse(id);
-        this.ingredientType = IngredientType.Item;
+        this.type = IngredientType.Item;
     }
 
     public MCIngredient(String id, IngredientType type) {
         IdUtils.isValidThrow(id);
         this.id = IdUtils.parse(id);
-        this.ingredientType = type;
+        this.type = type;
     }
     
     public static MCIngredient buildFromJSON (JSONObject jsonObject) {
@@ -44,5 +59,10 @@ public class MCIngredient {
         }
 
         return ingredientList;
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return new JSONObject().put(type.toString(), id);
     }
 }

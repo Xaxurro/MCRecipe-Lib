@@ -1,9 +1,8 @@
-package org.xaxurro.classes.recipe;
+package org.xaxurro.recipe;
 
 import org.json.JSONObject;
-import org.xaxurro.classes.MCRecipeException;
-import org.xaxurro.classes.recipe.types.*;
 import org.xaxurro.enums.RecipeType;
+import org.xaxurro.recipe.types.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.xaxurro.enums.RecipeType.crafting_shaped;
-import static org.xaxurro.enums.RecipeType.crafting_shapeless;
 
 public final class MCRecipeFactory {
     private static RecipeType getRecipeType(JSONObject json){

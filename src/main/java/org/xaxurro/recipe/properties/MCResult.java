@@ -1,4 +1,4 @@
-package org.xaxurro.classes.recipe.properties;
+package org.xaxurro.recipe.properties;
 
 import lombok.*;
 import org.json.JSONObject;

@@ -1,16 +1,13 @@
-package org.xaxurro.classes.recipe.types;
+package org.xaxurro.recipe.types;
 
 import lombok.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.xaxurro.classes.recipe.properties.MCIngredient;
-import org.xaxurro.classes.recipe.properties.MCResult;
+import org.xaxurro.recipe.properties.MCIngredient;
+import org.xaxurro.recipe.properties.MCResult;
 import org.xaxurro.enums.RecipeType;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +31,11 @@ public class MCRecipeShapeless implements MCRecipe {
 //        TODO terminar lol
 
 //        return recipe;
+    }
+
+    @Override
+    public File generateJSON(File outputFile) throws IOException {
+        return null;
     }
 
 //    private void buildIngredients(JSONObject json) {

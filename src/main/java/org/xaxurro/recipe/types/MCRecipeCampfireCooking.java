@@ -1,9 +1,12 @@
-package org.xaxurro.classes.recipe.types;
+package org.xaxurro.recipe.types;
 
 
 import lombok.*;
 import org.json.JSONObject;
 import org.xaxurro.enums.RecipeType;
+
+import java.io.File;
+import java.io.IOException;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,5 +20,10 @@ public class MCRecipeCampfireCooking implements MCRecipe{
 
     public MCRecipeCampfireCooking(JSONObject json){
 
+    }
+
+    @Override
+    public File generateJSON(File outputFile) throws IOException {
+        return null;
     }
 }

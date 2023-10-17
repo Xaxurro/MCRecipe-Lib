@@ -1,6 +1,6 @@
-import org.xaxurro.classes.MCRecipeException;
-import org.xaxurro.classes.recipe.MCRecipeFactory;
-import org.xaxurro.classes.recipe.types.MCRecipe;
+import org.xaxurro.recipe.MCRecipeException;
+import org.xaxurro.recipe.MCRecipeFactory;
+import org.xaxurro.recipe.types.MCRecipe;
 import org.xaxurro.enums.RecipeType;
 
 import java.io.File;
